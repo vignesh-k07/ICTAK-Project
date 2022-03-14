@@ -38,7 +38,7 @@ function Register(props) {
 
     var config = {
       method: "post",
-      url: "http://localhost:8000/api/corporate/add",
+      url: "/api/corporate/add",
       headers: {
         "Content-Type": "application/json",
       },

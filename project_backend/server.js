@@ -18,7 +18,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cors()); //set cors
-app.use(express.static('./build/'));
+app.use(express.static('./public'))
+// app.use(express.static('./build/'));
 // cors headers
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
@@ -72,9 +73,9 @@ app.use(Knorouter);
 app.use("/api/testimonials",TestimonialRouter);
 app.use('/api',LoginRouter);
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/build/index.html'))
-    });
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname + '/build/index.html'))
+//     });
 
 // listen port
 app.listen(process.env.PORT || 8000, () => {

@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 // Multer codes for file uploading
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../../project_frontend/public/courseImages"));
+    cb(null, path.join(__dirname,'../../public/courseImages'));
   },
   filename: function (req, file, cb) {
     cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));

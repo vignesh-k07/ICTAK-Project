@@ -14,6 +14,7 @@ const CorporateRouter = require('./routes/corporate/CorporateRouter');
 const path = require('path');
 
 const app = express();
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
@@ -78,6 +79,6 @@ app.use('/api',LoginRouter);
 //     });
 
 // listen port
-app.listen(process.env.PORT || 8000, () => {
+app.listen(PORT, () => {
     console.log("Server running on port 8000...");
 });

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Editor } from '@tinymce/tinymce-react';
 
 export default function CourseAdd() {
-  const [course,setCourse] = useState({url:"",name:"",status:"",title:"",quote:"",shortDescription:"",fee:"",image:""});
+  const [course,setCourse] = useState({url:"",name:"",status:"",title:"",quote:"",shortDescription:"",fee:"",image:"",news:""});
   const [obj,setObj]=useState("");
   const [elig,setElig]=useState("");
   const [agenda,setAgenda]=useState("");
@@ -25,6 +25,7 @@ export default function CourseAdd() {
     formData.append('shortDescription',course.shortDescription);
     formData.append('fee',course.fee);
     formData.append('image',course.image);
+    formData.append('news',course.news);
     formData.append('objectives',obj);
     formData.append('eligibility',elig);
     formData.append('agenda',agenda);
@@ -171,6 +172,21 @@ export default function CourseAdd() {
                     name="shortDescription"
                     className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                     placeholder="The MERN stack is an excellent choice for web developers who wish to develop high-quality web applications using JavaScript. The core technologies define the MERN stack – MongoDB, Express.js, React, and Node.js – all are based on one language, Javascript."
+                    style={{ transition: "all .15s ease" }}
+                    required
+                  />
+                </div>
+                <div className="relative w-full mb-3 mt-8">
+                  <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
+                    Course News
+                  </label>
+                  <textarea
+                  onChange={handleChange}
+                    rows="5"
+                    cols="50"
+                    name="news"
+                    className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                    placeholder="A Full Stack Developer Is A Software Expert Who Is Capable Of Developing Both The Frontend And Back End Of A Web Application. Unlike Frontend Developers And Backend Developers, Full Stack Developers Are Capable Of Fully Designing And Developing A Web Application. The Course Offered By The ICT Academy Would Help Students To Build A Career Of Their Own By Understanding The Basic Lessons Of The Field. The Students Who Successfully Complete The Course Will Be Provided An Internship In TCS ION. Besides, They Would Be Provided An Opportunity To Study 14000 Courses On Linkedin Learning. Course Fee Is Rs19700 Exclusive Of GST. The Course Has 140 Seats."
                     style={{ transition: "all .15s ease" }}
                     required
                   />

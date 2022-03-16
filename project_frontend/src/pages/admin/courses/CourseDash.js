@@ -96,8 +96,15 @@ function CourseDash(props) {
                       scope="col"
                       className="px-5 py-3 bg-black  border-b border-gray-200 text-white text-left text-sm uppercase font-normal"
                     >
+                      Course News
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-5 py-3 bg-black  border-b border-gray-200 text-white text-left text-sm uppercase font-normal"
+                    >
                       status
                     </th>
+                    
                     <th
                       scope="col"
                       className="px-5 py-3 bg-black  border-b border-gray-200 text-white text-left text-sm uppercase font-normal"
@@ -146,6 +153,11 @@ function CourseDash(props) {
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
                         {course.fee}
+                      </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {course.news?.slice(0,50)}...
                       </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">

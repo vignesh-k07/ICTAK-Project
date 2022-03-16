@@ -59,21 +59,12 @@ export default function CourseView() {
                           <li><b>Quote :</b> {course.quote}</li>
                           <li><b>Short description :</b> {course.shortDescription}</li>
                           <li><b>Objectives: </b><div dangerouslySetInnerHTML={{ __html: `${course.objectives}` }}/> </li>
-                          <li><b>Highlights: </b><div dangerouslySetInnerHTML={{ __html: `${course.highlights}` }}/> </li>
                           <li><b>Important Dates: </b><div dangerouslySetInnerHTML={{ __html: `${course.dates}` }}/> </li>
                           <li><b>Agenda: </b><div dangerouslySetInnerHTML={{ __html: `${course.agenda}` }}/> </li>
                           <li><b>eligibility : </b><div dangerouslySetInnerHTML={{ __html: `${course.eligibility}` }}/> </li>
-                          <li>fees: {course.fee}</li>
-                          <li><b>Testimonials : </b>{course.testimonials?.map((test,index)=>(
-                            
-                            <ul style={{listStyle:"outside"}}>
-                            <h2 style={{backgroundColor:"black",padding:"2px",color:"white"}}>{index+1}</h2>
-                              <li><b>name:</b> {test.name}</li>
-                              <li><b>Placed @ :</b>{test.placed}</li>
-                              <li><b>Quote :</b>{test.quote}</li>
-                              <img src={`${test.image}`} alt ={test.name}/>
-                            </ul>
-                          ))}</li>
+                          <li><b>fees: </b>{course.fee}</li>
+                          <li><b>News: </b>{course.news}</li>
+                          
                         </ul>
                       </div>
                     </div>

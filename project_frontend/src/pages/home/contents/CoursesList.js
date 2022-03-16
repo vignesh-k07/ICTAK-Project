@@ -29,7 +29,6 @@ function CourseList({Aos}) {
     return (
         <div>
                   <div className=" grid lg:grid-cols-2 md:grid-cols-1 gap-2">
-      {/* {home? setCourseLists(CourseLists.slice(0,2)) : setCourseLists(CourseLists)} */}
         {CourseLists.slice(0, 2).map((course, index) => (
           <>
             <div

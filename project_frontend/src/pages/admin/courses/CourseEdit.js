@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Editor } from '@tinymce/tinymce-react';
 
 function CourseEdit() {
   const navigate = useNavigate();
   const { name } = useParams();
 
   const [course, setCourse] = useState([]);
+  const [obj,setObj]=useState("");
+  const [elig,setElig]=useState("");
+  const [agenda,setAgenda]=useState("");
+  const [dates,setDates]=useState("");
 
   // get course details
   const getdata = () => {
@@ -36,7 +41,11 @@ function CourseEdit() {
     formData.append('shortDescription',course.shortDescription);
     formData.append('fee',course.fee);
     formData.append('image',course.image);
-
+    formData.append('objectives',obj);
+    formData.append('eligibility',elig);
+    formData.append('agenda',agenda);
+    formData.append('dates',dates);
+    formData.append('news',course.news)
     var config = {
       method: 'post',
       url: `/api/courses/edit-course/${name}`,
@@ -194,6 +203,21 @@ function CourseEdit() {
         </div>
         <div className="relative w-full mb-3 mt-8">
           <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
+            Course News
+          </label>
+          <textarea
+            onChange={handleChange}
+            value={course.news}
+            rows="5"
+            cols="50"
+            name="news"
+            className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+            style={{ transition: "all .15s ease" }}
+            required
+          />
+        </div>
+        <div className="relative w-full mb-3 mt-8">
+          <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
             Course Fee
           </label>
           <input
@@ -219,7 +243,110 @@ function CourseEdit() {
             placeholder="File upload"
           />
         </div>
+        <div className="relative w-full mb-3 mt-8">
+                  <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
+                    Objectives
+                  </label>
+                  <Editor
+        textareaName='objectives'
+        initialValue={course.objectives}
+        init={{
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        }}
+        onEditorChange={(obj)=>setObj(obj)}
+        required
+    />
 
+                </div>
+
+                <div className="relative w-full mb-3 mt-8">
+                  <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
+                    Eligibility
+                  </label>
+                  <Editor
+        textareaName='eligibility'
+        initialValue={course.eligibility}
+        init={{
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        }}
+        onEditorChange={(elig)=>setElig(elig)}
+        required
+    />
+    
+                </div>
+                <div className="relative w-full mb-3 mt-8">
+                  <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
+                   Course  Agenda
+                  </label>
+                  <Editor
+        textareaName='objectives'
+        initialValue={course.agenda}
+        init={{
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        }}
+        onEditorChange={(agenda)=>setAgenda(agenda)}
+        required
+    />
+    
+                </div>
+                <div className="relative w-full mb-3 mt-8">
+                  <label className="block uppercase text-gray-700 text-xs font-bold mb-2">
+                   Important Dates
+                  </label>
+                  <Editor
+        textareaName='objectives'
+        initialValue={course.dates}
+        init={{
+            height: 200,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        }}
+        onEditorChange={(dates)=>setDates(dates)}
+        required
+    />
+    </div>
         <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <a href="/admin/coursedash">
             <button

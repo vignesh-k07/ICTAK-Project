@@ -22,6 +22,9 @@ var Courses = new Schema({
   shortDescription: {
     type: String,
   },
+  news:{
+    type:String
+  },
   objectives: {
     type: String,
   },

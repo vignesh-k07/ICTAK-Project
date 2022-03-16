@@ -1,10 +1,31 @@
-import React, { useEffect } from  'react';
+import React, { useEffect, useState } from  'react';
 import "./news.css";
 import Aos from 'aos';
+import axios from 'axios';
+import CourseList from '../home/contents/CoursesList';
+import { Link } from 'react-router-dom';
 const News = () => {
+
+  const [courseLists,setCourseLists] = useState([])
 
   useEffect(() => {
     Aos.init({});
+  }, []);
+
+  useEffect(() => {
+    var config = {
+      method: "get",
+      url: "/api/courses",
+    };
+
+    axios(config)
+      .then(function (response) {
+        // console.log(JSON.stringify(response.data));
+        setCourseLists(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
 return(
@@ -33,44 +54,16 @@ return(
     
     
     <div data-aos="flip-down" data-aos-duration="1000" className="pt-2 pr-4 pl-2 newsCourse">
-    
-    <a href = "/#" class="  hover:text-black text-center pt-2 pr-4 pl-2  text-justify capitalize flex flex-col space-y-4 font-bold rounded-lg py-5 px-6 mb-3 text-lg text-indigo-700 inline-flex items-center w-full" role="alert">  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    {courseLists.map((course)=>(
+      <>
+      <Link to={`/course/${course.url}`} state={{ course }} class="  hover:text-black text-center pt-2 pr-4 pl-2  text-justify capitalize flex flex-col space-y-4 font-bold rounded-lg py-5 px-6 mb-3 text-lg text-indigo-700 inline-flex items-center w-full" role="alert">  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <path fill="currentColor" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-    </svg>Full Stack Development Certificate Course</a>
+    </svg>{course.name}</Link>
     
-    <p className="text-center tracking-wide  pt-2 pr-4 pl-2 text-justify capitalize">A full stack developer is a software expert who is capable of developing both the frontend and back end of a web application. Unlike frontend developers and backend developers, full stack developers are capable of fully designing and developing a web application. The course offered by the ICT Academy would help students to build a career of their own by understanding the basic lessons of the field. The students who successfully complete the course will be provided an internship in TCS iON. Besides, they would be provided an opportunity to study 14000 courses on Linkedin Learning. Course Fee is Rs19700 exclusive of GST. The course has 140 seats.</p>
+    <p className="text-center tracking-wide  pt-2 pr-4 pl-2 text-justify capitalize">{course.news}</p>
 
-    <a href = "/#" class="  hover:text-black text-center pt-2 pr-4 pl-2  text-justify capitalize font-bold flex flex-col space-y-4 font-bold rounded-lg py-5 px-6 mb-3 text-lg text-indigo-700 inline-flex items-center w-full" role="alert">  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <path fill="currentColor" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-    </svg>Data Science and Analytics Certificate Course</a>
-    
-    <p className="text-center tracking-wide  pt-2 pr-4 pl-2 text-justify capitalize">Learning of the science behind data, which has become the most valuable thing in the world, will open vast opportunities for the students. ICT Academy is providing an opportunity for the students to learn the course by sitting at the comfort of their home. The course is suitable for graduates and professionals. The duration of the course is six months. The students who successfully complete the course will be provided an opportunity to do an internship in TCS iON.They will also get free admission for Linkedin Learning courses. Students who have completed graduation in any engineering or science streams can apply for the course. Course Fee is Rs 19700+GST. Number of seats is 140.</p>
-
-    <a href = "/#" class=" text-red-500 hover:text-black text-center pt-2 pr-4 pl-2  text-justify capitalize font-bold flex flex-col space-y-4 rounded-lg py-5 px-6 mb-3 text-lg text-indigo-700 inline-flex items-center w-full" role="alert">  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <path fill="currentColor" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-    </svg>     Robotic Process Automation</a>
-    
-    <p className="text-center tracking-wide  pt-2 pr-4 pl-2 text-justify capitalize">Robotic Process Automation is another new-generation course that has huge employment potential in India as well as abroad. Robotic Process Automation (RPA) is the process of carrying out basic and repetitive office works quickly and accurately by using software bots.The demand for RPA experts has been growing in sectors such as banking. By acquiring skills in the sector, students can build a successful and rewarding career. 70 students will be admitted in the six-month long course. Science and Engineering graduates can apply for the course. Course Fee is Rs. 19700 without GST.</p>
-
-    <a href = "/#" class=" text-red-500 hover:text-black text-center  pt-2 pr-4 pl-2  text-justify capitalize font-bold flex flex-col space-y-4 rounded-lg py-5 px-6 mb-3 text-lg text-indigo-700 inline-flex items-center w-full" role="alert">  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <path fill="currentColor" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-    </svg>     Cyber Security Analytics</a>
-    
-    <p className="text-center tracking-wide  pt-2 pr-4 pl-2 text-justify capitalize">As cyber-attacks have been on the rise, the significance of Cyber Security Analyst is growing. It is the job of cyber security analysts to ensure protection of data and machines, including computers and smartphones from cyber-attacks. It is also the responsibility of cyber security analysts to prevent and check hacking, malware, fishing, attacks on Internet of Things, data breaches and spying. The course will help students to acquire the best skills required for becoming successful in cyber security. The duration of the course is six also months. The Cyber Security Analytics course has 140 seats.Students with graduation in any science or engineering streams can apply for the course. Course Fee is Rs 19000 exclusive of GST. After the completion of the course, the students will get an opportunity to do an internship in TCS iON.</p>
-
-    <a href = "/#"class=" text-red-500 hover:text-black text-center  pt-2 pr-4 pl-2  text-justify capitalize font-bold flex flex-col space-y-4 rounded-lg py-5 px-6 mb-3 text-lg text-indigo-700 inline-flex items-center w-full" role="alert">  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <path fill="currentColor" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-    </svg>    Digital Marketing </a>
-    
-    <p className="text-center tracking-wide  pt-2 pr-4 pl-2 text-justify capitalize">Digital Marketing is a word that has become very popular post COVID-19 outbreak. Many traders around us have switched over to online business after hit by COVID-19 caused lockdown. Digital Marketers is a group of experts who help business entities, from small to large, to switch to online and increase their business using digital platforms. As everything has become digital, the field of Digital Marketing has huge employment potential and there is huge demand for digital marketers in the job market. Therefore, youngsters who have been facing a crisis in their career can build a rewarding career by learning Digital Marketing course. The students who perform well in the entrance examination will be provided a scholarship of 75 per cent of the course fee. The duration of the course is also six months. Number of seats is 70. Graduates of any stream can apply for a Digital Marketing course. Fee is Rs 19700 without tax.</p>
-
-    
-    <a href = "/#" class=" text-red-500 hover:text-black text-center pt-5 pr-4 pl-2  text-justify capitalize font-bold flex flex-col space-y-4 rounded-lg py-5 px-6 mb-3 text-lg text-indigo-700 inline-flex items-center w-full" role="alert">  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <path fill="currentColor" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-    </svg>    Software Testing</a>
-    
-    <p className="text-center tracking-wide  pt-2 pr-4 pl-2 text-justify capitalize">Ensuring the quality of the software as per the clients’ requirement is called Software Testing. In the computer era, a well-trained Software Tester has high demand in the industry. As the demand for such professionals are increasing day by day, this course will be of great use for candidates looking for a bright career. A candidate, who starts off his career as a Test Engineer can raise to the position of Senior Test Engineer, Test Manager in his later career. The course offers classes in, the need for software testing, various testing methods, tools used, etc. The duration of the course is six months. After the course the students can avail 125 hours internship at TCS iON. Total number of seats available is 70. Science/ Engineering graduates are eligible to apply for the course. Course fee- Rs. 19,700 + GST</p>
-     
+      </>
+    ))}
     </div>
 
     

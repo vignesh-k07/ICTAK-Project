@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 // Multer codes for file uploading
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname,'../../public/courseImages'));
+    cb(null, path.join(__dirname, "../../public/courseImages"));
   },
   filename: function (req, file, cb) {
     cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
@@ -36,14 +36,13 @@ router.route("/").get((req, res) => {
 
 // get courses list
 router.route("/count").get((req, res) => {
-  Courses.find({status:"open"}).then(function (courses) {
+  Courses.find({ status: "open" }).then(function (courses) {
     res.json(courses.length);
   });
 });
 
 // get single course page
 router.route("/:name").get((req, res) => {
-
   const courseName = req.params.name;
 
   Courses.findOne({ url: courseName }).then((course) => {
@@ -52,81 +51,98 @@ router.route("/:name").get((req, res) => {
 });
 
 // add new course
-router.route("/add-course").post(upload.single('image'),(req,res)=>{
+router.route("/add-course").post(upload.single("image"), (req, res) => {
   console.log(req.body);
-  var item={
-    url:req.body.url,
-    name:req.body.name,
-    status:req.body.status,
-    title:req.body.title,
-    quote:req.body.quote,
-    shortDescription:req.body.shortDescription,
-    fee:req.body.fee,
-    image:req.file.filename,
-    objectives:req.body.objectives,
-    eligibility:req.body.eligibility,
-    agenda:req.body.agenda,
-    dates:req.body.dates
+  var item = {
+    url: req.body.url,
+    name: req.body.name,
+    status: req.body.status,
+    title: req.body.title,
+    quote: req.body.quote,
+    shortDescription: req.body.shortDescription,
+    fee: req.body.fee,
+    image: req.file.filename,
+    objectives: req.body.objectives,
+    eligibility: req.body.eligibility,
+    agenda: req.body.agenda,
+    dates: req.body.dates,
+    news:req.body.news
   };
-  const course= new Courses(item);
+  const course = new Courses(item);
   course.save();
   res.send("Added Course");
-})
+});
 
 // update courses
-router.route(`/edit-course/:name`).post(upload.single('image'),(req,res)=>{
-  const id = req.params.name
+router.route(`/edit-course/:name`).post(upload.single("image"), (req, res) => {
+  const id = req.params.name;
 
-  const course = Courses.findOne({url:id})
-  var image= course.image;
+  const course = Courses.findOne({ url: id });
+  var image = course.image;
 
   const url = req.body.url;
   const name = req.body.name;
-  const status=req.body.status;
-  const title=req.body.title;
+  const status = req.body.status;
+  const title = req.body.title;
   const quote = req.body.quote;
-  const shortDescription=req.body.shortDescription;
+  const shortDescription = req.body.shortDescription;
   const fee = req.body.fee;
-  if(req.file){
-    image=req.file.filename;
+  const objectives = req.body.objectives;
+  const eligibility = req.body.eligibility;
+  const agenda = req.body.agenda;
+  const dates = req.body.dates;
+  const news = req.body.news;
+  if (req.file) {
+    image = req.file.filename;
   }
-  const filter={url:id};
+  const filter = { url: id };
 
-  const update={$set:{url:url,status:status,quote:quote,shortDescription:shortDescription,fee:fee,title:title,name:name,image:image}};
+  const update = {
+    $set: {
+      url: url,
+      status: status,
+      quote: quote,
+      shortDescription: shortDescription,
+      fee: fee,
+      title: title,
+      name: name,
+      image: image,
+      objectives:objectives,
+      eligibility:eligibility,
+      agenda:agenda,
+      dates:dates,
+      news:news
+    },
+  };
 
-  Courses.findOneAndUpdate(filter, update, { new: true })
-  .then(function(course){
-    res.json(course)
-  }
-  )
-})
+  Courses.findOneAndUpdate(filter, update, { new: true }).then(function (
+    course
+  ) {
+    res.json(course);
+  });
+});
 // delete courses
-router.route('/delete-course/:id').post( function (req, res) {
-  const url = req.params.id
-  Courses.findOneAndDelete({ url: url})
-      
-        .then(function () {
-  
-            console.log("deleted")
-            res.send("deleted")
-  
-        })  
-})
+router.route("/delete-course/:id").post(function (req, res) {
+  const url = req.params.id;
+  Courses.findOneAndDelete({ url: url })
+  .then(function () {
+    console.log("deleted");
+    res.send("deleted");
+  });
+});
 
 // post route for sending brochure using nodemailer
 router.route("/:name/mailer").post((req, res) => {
-
   const courseName = req.params.name;
 
   Courses.findOne({ url: courseName }).then((course) => {
     const mail = req.body.mail;
     const name = req.body.name;
     async function main() {
-
       // create reusable transporter object using the default SMTP transport
       let transporter = nodemailer.createTransport({
         service: "gmail",
-        secure: false, 
+        secure: false,
         auth: {
           user: "ictpro2022@gmail.com",
           pass: "Ict2022@",
@@ -146,23 +162,32 @@ router.route("/:name/mailer").post((req, res) => {
         in association with NORKA-Roots will be an asset for the youths of Kerala which will address the issue of unemployment.</p>
         <p>Thanks and regards</p>
         <p>ICT Accademy of Kerala</p>`, // html body
-        attachments:[
+        attachments: [
           {
-            filename:"ABCD_Brochure.pdf",
-            path:path.join(__dirname,"../../public/brochures/ABCD-Brochure.pdf")
+            filename: "ABCD_Brochure.pdf",
+            path: path.join(
+              __dirname,
+              "../../public/brochures/ABCD-Brochure.pdf"
+            ),
           },
           {
-            filename:"RPA Brochure.pdf",
-            path:path.join(__dirname,"../../public/brochures/RPA Brochure.pdf")
+            filename: "RPA Brochure.pdf",
+            path: path.join(
+              __dirname,
+              "../../public/brochures/RPA Brochure.pdf"
+            ),
           },
           {
-            filename:"Certified Specialist in  DS .pdf",
-            path:path.join(__dirname,"../../public/brochures/Certified Specialist in  DS .pdf")
-          }
-        ]
+            filename: "Certified Specialist in  DS .pdf",
+            path: path.join(
+              __dirname,
+              "../../public/brochures/Certified Specialist in  DS .pdf"
+            ),
+          },
+        ],
       });
     }
-    
+
     main()
       .then(console.log("mail sent"))
       .then(res.json(mail))

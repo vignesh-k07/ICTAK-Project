@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, Route, Routes } from "react-router-dom";
-import Addteam from "./Addteam";
-import Details from "./Details";
-import EditTeam from "./Edit";
+import { NavLink } from "react-router-dom";
 
 
 function Team() {
@@ -36,7 +33,7 @@ function Team() {
     }, [])
 
     const deleteuser = async (id) => {
-        const res2 = await fetch(`http://localhost:8000/deleteuser/${id}`, {
+        const res2 = await fetch(`/deleteuser/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"

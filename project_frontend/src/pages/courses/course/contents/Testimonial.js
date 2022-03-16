@@ -9,7 +9,7 @@ function Testimonial({course}) {
   const getData=()=>{
     var config = {
       method: "get",
-      url: `http://localhost:8000/api/testimonials`,
+      url: `/api/testimonials`,
     };
 
     axios(config)

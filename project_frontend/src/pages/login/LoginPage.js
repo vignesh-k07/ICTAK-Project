@@ -1,6 +1,6 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { loginValidation } from "./validation";
-import jwt from 'jwt-decode';
+import jwt from "jwt-decode";
 
 const style = {
   wrapper: `relative`,
@@ -10,39 +10,38 @@ const style = {
 };
 
 const LoginPage = () => {
-  
   //Manage Form Inputs
   const [inputs, setInputs] = useState({ username: "", password: "" });
 
   async function loginUser(event) {
     event.preventDefault();
-    const response = await fetch('/api/login',{
-      method:'POST',
+    const response = await fetch("/api/login", {
+      method: "POST",
       headers: {
-        'Content-Type':'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: inputs.username,
         password: inputs.password,
-      })
+      }),
     });
 
     const data = await response.json();
     console.log(data);
-    
-    if(data.user){
+
+    if (data.user) {
       let user = jwt(data.user);
-      
-      if(user.username === 'admin'){
-        localStorage.setItem('admin', true);
-      }else{
-        localStorage.setItem('admin', false);
+
+      if (user.username === "admin") {
+        localStorage.setItem("admin", true);
+      } else {
+        localStorage.setItem("admin", false);
       }
-      localStorage.setItem('token', data.user);
-      alert('Login successful')
-      window.location.href = '/admin';
-    }else{
-      alert('Please check your username and password')
+      localStorage.setItem("token", data.user);
+      alert("Login successful");
+      window.location.href = "/admin";
+    } else {
+      alert("Please check your username and password");
     }
     console.log(data);
   }
@@ -60,24 +59,12 @@ const LoginPage = () => {
   };
 
   //Manage Form Submit
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setErrors(loginValidation(inputs));
     setIssubmit(true);
     loginUser(event);
   };
-
-  //Successful Signup validation
-  // useEffect(
-  //   (event) => {
-  //     if (Object.keys(errors).length === 0 && isSubmit) {
-  //       alert("Login Successful");
-  //       console.log(localStorage.getItem('admin').value);
-  //       // navigate('/admin');
-  //     }
-  //   },
-  //   [errors, isSubmit]
-  // );
 
   return (
     <div className={style.wrapper}>
@@ -106,7 +93,8 @@ const LoginPage = () => {
                       <h1 className="mb-4 text-2xl font-bold text-center text-white">
                         Login
                       </h1>
-                      <form id="login"
+                      <form
+                        id="login"
                         action="/api/login"
                         onSubmit={handleSubmit}
                         method="post"

@@ -34,7 +34,7 @@ function Knowledge() {
     }, [])
 
     const deleteuser = async (id) => {
-        const res2 = await fetch(`http://localhost:8000/deletingpartner/${id}`, {
+        const res2 = await fetch(`/deletingpartner/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
